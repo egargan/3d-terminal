@@ -1,15 +1,12 @@
-#include <iostream>
-#include <ncurses.h>
+#include "Model.h"
+#include "Graphics.h"
+
 
 int main() {
 
-    initscr();			/* Start curses mode 		  */
+    Graphics gfx = Graphics();
 
-    prin
-
-    refresh();			/* Print it on to the real screen */
-    getch();			/* Wait for user input */
-    endwin();			/* End curses mode */
+    gfx.drawLine(3, 6, 40, 20, 0.24);
 
     return 0;
 }
