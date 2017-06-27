@@ -55,6 +55,7 @@ void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade)
     float slope = 0, pitch = 0;
 
     if (abs(dy) < abs(dx)) {
+
         slope = dy / (float)dx;
         pitch = starty - slope * startx;
 
@@ -63,6 +64,7 @@ void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade)
             startx += sx;
         }
     } else {
+
         slope = dx / (float)dy;
         pitch = startx - slope * starty;
 

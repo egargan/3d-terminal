@@ -6,7 +6,7 @@ include_directories(${CURSES_INCLUDE_DIR})
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp Model.h Model.cpp Graphics.cpp Graphics.h)
+set(SOURCE_FILES main.cpp Model.h Model.cpp Graphics.cpp Graphics.h World.cpp World.h)
 add_executable(3dTerminal ${SOURCE_FILES})
 
 target_link_libraries(3dTerminal ${CURSES_LIBRARIES})

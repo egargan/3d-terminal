@@ -1,12 +1,12 @@
 #include "Model.h"
 #include "Graphics.h"
+#include "World.h"
 
 
 int main() {
 
-    Graphics gfx = Graphics();
+    // do render loop
 
-    gfx.drawLine(3, 6, 40, 20, 0.24);
 
     return 0;
 }

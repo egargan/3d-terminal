@@ -19,7 +19,6 @@ public :
     /* Draws polygon between given coordinates. */
     void drawPolygon(std::vector<int> xpts, std::vector<int> ypts, float shade, bool fill);
 
-
     int getWidth() { return screenWidth; };
     int getHeight() { return screenHeight; };
 
