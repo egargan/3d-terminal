@@ -44,20 +44,18 @@ void Graphics::drawPixel(int x, int y, float shade) {
     getch();
 }
 
+/* Draws line between two 2d points using 'Bresenham's line algorithm'. */
 void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade) {
 
     int dx = endx - startx;
-    int sx = (dx < 0) ? -1 : 1;
-
     int dy = endy - starty;
-    int sy = (dy < 0) ? -1 : 1;
-
-    float slope = 0, pitch = 0;
 
     if (abs(dy) < abs(dx)) {
 
-        slope = dy / (float)dx;
-        pitch = starty - slope * startx;
+        int sx = (dx < 0) ? -1 : 1;
+
+        float slope = dy / (float)dx;
+        float pitch = starty - slope * startx;
 
         while (startx != endx) {
             drawPixel(startx, (int)(slope*startx + pitch + 0.5), shade);
@@ -65,8 +63,10 @@ void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade)
         }
     } else {
 
-        slope = dx / (float)dy;
-        pitch = startx - slope * starty;
+        int sy = (dy < 0) ? -1 : 1;
+
+        float slope = dx / (float)dy;
+        float pitch = startx - slope * starty;
 
         while (starty != endy) {
             drawPixel((int)(slope*starty + pitch + 0.5), starty, shade);
