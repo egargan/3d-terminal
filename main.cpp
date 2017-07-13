@@ -6,7 +6,7 @@ int main() {
 
     // do render loop
 
-    printf("%d",i);
+    printf("%d", 2);
 
     return 0;
 }
