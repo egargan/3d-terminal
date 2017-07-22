@@ -1,12 +1,20 @@
 #include "Model.h"
+#include "Models/Cube.cpp"
 #include "Graphics.h"
 #include "World.h"
 
 int main() {
 
-    // do render loop
+    Graphics gfx;
+    World world(gfx);
 
-    printf("%d", 2);
+    Cube cube(0.2);
+
+    world.addObject(cube);
+
+    world.renderObjects();
+
+    gfx.wait();
 
     return 0;
 }

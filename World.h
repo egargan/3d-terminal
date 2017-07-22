@@ -4,8 +4,6 @@
 
 #include <vector>
 
-// Would forward declare but CLion doesn't seem to like it
-// NO,cannot forward declare objects, only pointers
 #include "Model.h"
 #include "Graphics.h"
 #include "WorldScreenTransformer.h"
@@ -18,15 +16,14 @@ public:
     World(Graphics);
     ~World();
 
-    void addObject(Model);
-    void addObject(Model, Vec3f);
+    void addObject(Model&);
 
     void renderObjects();
 
 private:
 
     Graphics gfx;
-    std::vector<Model> objects;
+    std::vector<Model*> objects;
 
     WorldScreenTransformer wsTransformer;
 

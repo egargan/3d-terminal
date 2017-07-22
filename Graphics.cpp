@@ -14,34 +14,26 @@ Graphics::Graphics() {
     characters = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
 
     numChars = 0;
-    while (characters[++numChars] != ' '); // Assume whitespace ends list
+    while (characters[numChars++] != ' '); // Assume whitespace ends list
 }
 
-Graphics::~Graphics() {
-
-    endwin();
-
-}
+Graphics::~Graphics() { endwin(); }
 
 char Graphics::getCharFromShade(float shade) {
 
     assert(shade >= 0 && shade <= 1);
-
     return characters[int(numChars * shade + 0.5)];
 }
 
 void Graphics::drawPixel(int x, int y, float shade) {
 
-    ungetch(0);
-    // Push char into input buffer to stop 'getch' blocking
-    // Works for now but probably smells bad.
-
     assert(x <= screenWidth);
     assert(y <= screenHeight);
 
-    mvaddch(y, x, getCharFromShade(shade));
+    mvaddch(y, x, getCharFromShade(shade)); }
 
-    getch();
+void Graphics::drawLine(Vec3f start, Vec3f end, float shade) {
+    drawLine((int)start.x, (int)start.y, (int)end.x, (int)end.y, shade);
 }
 
 /* Draws line between two 2d points using 'Bresenham's line algorithm'. */
@@ -61,6 +53,7 @@ void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade)
             drawPixel(startx, (int)(slope*startx + pitch + 0.5), shade);
             startx += sx;
         }
+
     } else {
 
         int sy = (dy < 0) ? -1 : 1;
@@ -73,10 +66,10 @@ void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade)
             starty += sy;
         }
     }
-
     drawPixel(endx, endy, shade);
+}
 
+void Graphics::wait() const {
     getch();
-
 }
 
