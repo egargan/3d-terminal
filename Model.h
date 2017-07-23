@@ -12,14 +12,12 @@ class Model {
 
 public:
 
-    Model(std::vector<Vec3f>);
+    explicit Model(std::vector<Vec3f>);
     Model();
 
     virtual IndexedLineList getLines() const;
 
     ~Model();
-
-protected:
 
     // Faces of model will be tuples of vertices, thf. will probs need to rework how vertices are stored
     // For now we just want to render the wireframes

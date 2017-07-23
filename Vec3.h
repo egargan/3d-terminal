@@ -15,26 +15,26 @@ struct Vec3 {
     Vec3(T _x,T _y,T _z) : x{_x}, y{_y}, z{_z} {};
 
     /* Operators */
-    Vec3<T>& operator+=(Vec3<T> const& rhs) {
+    Vec3& operator+=(Vec3<T> const& rhs) {
         x += rhs.x;
         y += rhs.y;
         z += rhs.z;
         return *this;
     }
-    Vec3<T>& operator-=(Vec3<T> const& rhs) {
+    Vec3& operator-=(Vec3<T> const& rhs) {
         x -= rhs.x;
         y -= rhs.y;
         z -= rhs.z;
         return *this;
     }
 
-    Vec3<T>& operator*=(T const& rhs) {
+    Vec3& operator*=(T const& rhs) {
         x *= rhs;
         y *= rhs;
         z *= rhs;
         return *this;
     }
-    Vec3<T>& operator/=(T const& rhs) {
+    Vec3& operator/=(T const& rhs) {
         x /= rhs;
         y /= rhs;
         z /= rhs;
@@ -56,6 +56,15 @@ struct Vec3 {
     }
 
     // Vector's xyz gettable using []
+    T& operator[](int i) {
+        assert(i < 3 && i >= 0);
+        switch (i) {
+            case 0 : return x;
+            case 1 : return y;
+            case 2 : return z;
+        }
+    }
+
     T operator[](int i) const {
         assert(i < 3 && i >= 0);
         switch (i) {

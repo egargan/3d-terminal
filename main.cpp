@@ -3,18 +3,23 @@
 #include "Graphics.h"
 #include "World.h"
 
+#include <thread>
+
 int main() {
 
     Graphics gfx;
     World world(gfx);
 
-    Cube cube(0.2);
+    Cube cube(1.0);
 
     world.addObject(cube);
 
-    world.renderObjects();
-
     gfx.wait();
+
+    while(true) {
+        world.renderObjects();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
 
     return 0;
 }

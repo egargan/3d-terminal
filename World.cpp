@@ -1,6 +1,9 @@
 
 #include "World.h"
 
+#include <cstdio>
+#include <iostream>
+
 World::World(Graphics context) : gfx{context}, wsTransformer(context) {};
 
 World::~World() {
@@ -13,22 +16,35 @@ void World::addObject(Model& object) {
 
 void World::renderObjects() {
 
+    gfx.clear();
+
     for (Model* object : objects) {
+
+        // Make transformation matrix
+        Mat3f transform;
+        transform = Mat3f::RotationX(0.1f);
+        transform *= Mat3f::RotationY(0.1f);
+
+        // Do some world-space transformations
+        for ( auto& v : object->vertices) {
+            v *= transform;
+        }
 
         auto lines = object->getLines();
 
-        for ( auto& v : lines.vertices) {
-            wsTransformer.TransformVec(v);
-        }
-
+        // Get screen-space coordinates and display
         for (auto i = lines.indices.cbegin(), end = lines.indices.cend();
                 i != end; std::advance(i,2)) {
-            auto s = lines.vertices[*i];
-            auto e = lines.vertices[*std::next(i)];
-            //printf("(%d,%d) -> (%d,%d)\n", (int)s.x, (int)s.y, (int)e.x, (int)e.y);
-            gfx.drawLine(lines.vertices[*i], lines.vertices[*std::next(i)], 0.1);
+
+            //auto s = lines.vertices[*i];
+            //auto e = lines.vertices[*std::next(i)];
+            //std::cout << "(" << s.x << ", " << s.y << ") -> (" << e.x << ", " << e.y << ")\n";
+
+            gfx.drawLine(wsTransformer.getTransformedVec(lines.vertices[*i]),
+                         wsTransformer.getTransformedVec(lines.vertices[*std::next(i)]),
+                         0.5); // Shade of line (0 = darkest)
         }
 
     }
-
+    gfx.wait();
 }

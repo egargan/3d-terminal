@@ -6,6 +6,7 @@ class Cube : public Model {
 public:
 
     Cube(float size) : Model() {
+        size /= 2.0;
         vertices.push_back({-size, -size, -size});
         vertices.push_back({-size, -size, size});
         vertices.push_back({-size, size, -size});
@@ -17,7 +18,7 @@ public:
         vertices.push_back({size, size, size});
     }
 
-    virtual IndexedLineList getLines() const {
+    IndexedLineList getLines() const {
         return {
                 vertices, {
                         0,2,  2,6,  6,4,  4,0,

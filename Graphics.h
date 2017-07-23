@@ -26,7 +26,11 @@ public :
     int getScreenWidth() { return screenWidth; };
     int getScreenHeight() { return screenHeight; };
 
+    /* ncurses only seems to do it's thing when a getch() is called, */
+    /* these methods are used to kick start drawing to the terminal. */
     void wait() const;
+    void proceed() const;
+    void clear() const;
 
 private :
 
