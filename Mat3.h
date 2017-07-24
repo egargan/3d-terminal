@@ -72,8 +72,8 @@ struct Mat3 {
 
         return {
                 (T)1.0,  (T)0.0,       (T)0,
-                (T)0,  cosTheta,   sineTheta,
-                (T)0,  -sineTheta,  cosTheta
+                (T)0,  cosTheta,   -sineTheta,
+                (T)0,  sineTheta,  cosTheta
         };
     }
 
@@ -83,9 +83,9 @@ struct Mat3 {
         const T cosTheta = cos(theta);
 
         return {
-                cosTheta,  (T)0,   -sineTheta,
+                cosTheta,  (T)0,   sineTheta,
                 (T)0,      (T)1,   (T)0,
-                sineTheta, (T)0,   cosTheta
+                -sineTheta, (T)0,   cosTheta
         };
     }
 
@@ -95,8 +95,8 @@ struct Mat3 {
         const T cosTheta = cos(theta);
 
         return {
-                cosTheta,  sineTheta, (T)0,
-                -sineTheta, cosTheta,   (T)0,
+                cosTheta,  -sineTheta, (T)0,
+                sineTheta, cosTheta,   (T)0,
                 (T)0,      (T)0,       (T)1
         };
     }

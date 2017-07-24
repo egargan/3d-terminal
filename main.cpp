@@ -10,15 +10,13 @@ int main() {
     Graphics gfx;
     World world(gfx);
 
-    Cube cube(1.0);
+    Cube cube(0.2f);
 
     world.addObject(cube);
 
-    gfx.wait();
-
     while(true) {
         world.renderObjects();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
     return 0;

@@ -11,9 +11,6 @@ struct Vec3 {
 
     T x, y, z;
 
-    Vec3() : Vec3(T(), T(), T()) {};
-    Vec3(T _x,T _y,T _z) : x{_x}, y{_y}, z{_z} {};
-
     /* Operators */
     Vec3& operator+=(Vec3<T> const& rhs) {
         x += rhs.x;
@@ -62,6 +59,7 @@ struct Vec3 {
             case 0 : return x;
             case 1 : return y;
             case 2 : return z;
+            default : return (T)0;
         }
     }
 
@@ -71,6 +69,7 @@ struct Vec3 {
             case 0 : return x;
             case 1 : return y;
             case 2 : return z;
+            default : return (T)0;
         }
     }
 

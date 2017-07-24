@@ -21,16 +21,20 @@ void World::renderObjects() {
     for (Model* object : objects) {
 
         // Make transformation matrix
-        Mat3f transform;
-        transform = Mat3f::RotationX(0.1f);
-        transform *= Mat3f::RotationY(0.1f);
+        Mat3f transform = Mat3f::RotationY(0.05f);
 
-        // Do some world-space transformations
-        for ( auto& v : object->vertices) {
+        // Apply *permanent* transformation to model
+        for (auto& v : object->vertices) {
             v *= transform;
         }
 
+        // Get vertex values + apply *temporary*, value transformations
         auto lines = object->getLines();
+
+        for (auto& v : lines.vertices) {
+            v += {0.0f, 0.0f, 0.25f}; // Push object further into Z / away from viewport
+            wsTransformer.TransformVec(v);
+        }
 
         // Get screen-space coordinates and display
         for (auto i = lines.indices.cbegin(), end = lines.indices.cend();
@@ -40,8 +44,7 @@ void World::renderObjects() {
             //auto e = lines.vertices[*std::next(i)];
             //std::cout << "(" << s.x << ", " << s.y << ") -> (" << e.x << ", " << e.y << ")\n";
 
-            gfx.drawLine(wsTransformer.getTransformedVec(lines.vertices[*i]),
-                         wsTransformer.getTransformedVec(lines.vertices[*std::next(i)]),
+            gfx.drawLine(lines.vertices[*i], lines.vertices[*std::next(i)],
                          0.5); // Shade of line (0 = darkest)
         }
 
