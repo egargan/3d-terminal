@@ -6,7 +6,7 @@
 #include "Vec3.h"
 
 
-struct IndexedLineList {
+struct IndexedList {
 
     std::vector<Vec3f> vertices;
     std::vector<int> indices;

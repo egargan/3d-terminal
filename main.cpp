@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "Models/Cube.cpp"
+#include "Models/all.h"
 #include "Graphics.h"
 #include "World.h"
 
@@ -10,9 +10,10 @@ int main() {
     Graphics gfx;
     World world(gfx);
 
-    Cube cube(0.2f);
+    Pyramid pyramid(1.5f, 1.0f);
+    //Cube cube(1.0f);
 
-    world.addObject(cube);
+    world.addObject(pyramid);
 
     while(true) {
         world.renderObjects();

@@ -5,7 +5,7 @@ Model::Model(std::vector<Vec3f> points) : vertices{points}, location{0,0,0} { };
 Model::Model() : location{0,0,0} {};
 
 
-IndexedLineList Model::getLines() const {
+IndexedList Model::getLines() const {
 
     std::vector<int> edges;
 

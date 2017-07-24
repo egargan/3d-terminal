@@ -5,7 +5,7 @@
 #include "Graphics.h"
 #include "Vec3.h"
 
-/* Transforms coordinates from World space (-1.0 to +1.0 in x/y, 0.0 to 1.0 in z; mimics 'NDC' space),
+/* Transforms coordinates from World space (-1.0 to +1.0 in x/y/z; 'NDC'ish space),
  * to Screen space, 0 to screen width / height. */
 class WorldScreenTransformer {
 

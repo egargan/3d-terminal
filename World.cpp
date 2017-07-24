@@ -30,13 +30,11 @@ void World::renderObjects() {
 
         // Get vertex values + apply *temporary*, value transformations
         auto lines = object->getLines();
-
         for (auto& v : lines.vertices) {
-            v += {0.0f, 0.0f, 0.25f}; // Push object further into Z / away from viewport
+            v += {0.0f, 0.0f, 1.5f}; // Push object further into Z / away from viewport
             wsTransformer.TransformVec(v);
         }
 
-        // Get screen-space coordinates and display
         for (auto i = lines.indices.cbegin(), end = lines.indices.cend();
                 i != end; std::advance(i,2)) {
 

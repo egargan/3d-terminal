@@ -36,7 +36,6 @@ struct Mat3 {
         return (Mat3<T>(lhs) *= rhs);
     }
 
-
     // Matrix by vector mult.
     friend Vec3<T> operator*(Mat3<T> const& lhs, Vec3<T> const& rhs) {
         return {
@@ -46,14 +45,14 @@ struct Mat3 {
         };
     }
 
-    // Vector's self by matrix mult.
-    friend Vec3<T>& operator*=(Vec3<T>& lhs, Mat3<T> const& rhs) {
-        return lhs = rhs * lhs;
-    }
-
     // Vector by matrix mult. ('*' will be commutative)
     friend Vec3<T> operator*(Vec3<T> const& rhs, Mat3<T> const& lhs) {
         return lhs * rhs;
+    }
+
+    // Vector's self by matrix mult.
+    friend Vec3<T>& operator*=(Vec3<T>& lhs, Mat3<T> const& rhs) {
+        return lhs = rhs * lhs;
     }
 
 

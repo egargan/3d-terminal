@@ -4,7 +4,7 @@
 
 #include "Mat3.h"
 #include "Vec3.h"
-#include "IndexedLineList.h"
+#include "IndexedList.h"
 
 #include <vector>
 
@@ -15,7 +15,7 @@ public:
     explicit Model(std::vector<Vec3f>);
     Model();
 
-    virtual IndexedLineList getLines() const;
+    virtual IndexedList getLines() const;
 
     ~Model();
 
