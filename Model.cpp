@@ -4,7 +4,7 @@ Model::Model(std::vector<Vec3f> points) : vertices{points}, location{0,0,0} { };
 
 Model::Model() : location{0,0,0} {};
 
-
+// Unless overridden, an edge will be drawn between every vertex.
 IndexedList Model::getLines() const {
 
     std::vector<int> edges;
