@@ -5,14 +5,14 @@
 #include "Model.h"
 
 #include <cstdio>
-#include <iostream>
 #include <fstream>
+#include <unistd.h>
 
 #include <string>
 
 class ModelImporter {
 
-    void import(const std::string);
+    int import(const std::string&);
 
 protected:
 

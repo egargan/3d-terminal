@@ -21,7 +21,7 @@ void World::renderObjects() {
     for (Model* object : objects) {
 
         // Make transformation matrix
-        Mat3f transform = Mat3f::RotationX(0.05f);
+        Mat3f transform = Mat3f::RotationY(0.05f);
 
         // Apply *permanent* transformation to model
         for (auto& v : object->vertices) {

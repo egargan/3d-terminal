@@ -10,10 +10,10 @@ int main() {
     Graphics gfx;
     World world(gfx);
 
-    //Pyramid pyramid(1.5f, 1.0f);
-    Cube cube(1.0f);
+    Pyramid pyramid(1.5f, 1.0f);
+    //Cube cube(1.0f);
 
-    world.addObject(cube);
+    world.addObject(pyramid);
 
     while(true) {
         world.renderObjects();
