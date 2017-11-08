@@ -36,6 +36,7 @@ void Graphics::drawPixel(int x, int y, float shade) {
     assert(x <= screenWidth || x > 0);
     assert(y <= screenHeight || y > 0);
     mvaddch(y, x, getCharFromShade(shade));
+    //refresh();
 
 }
 
@@ -44,7 +45,7 @@ void Graphics::drawLine(Vec3f start, Vec3f end, float shade) {
 }
 
 /* Draws line between two 2d points using 'Bresenham's line algorithm'. */
-void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade) {
+void Graphics::drawLine(int startx, int starty, const int endx, const int endy, const float shade) {
 
     int dx = endx - startx;
     int dy = endy - starty;
@@ -76,6 +77,17 @@ void Graphics::drawLine(int startx, int starty, int endx, int endy, float shade)
     drawPixel(endx, endy, shade);
 }
 
+void Graphics::drawString(std::string msg, const int x, const int y) {
+    move(y, x);
+    printw(msg.c_str());
+}
+
+
+void Graphics::refresh() const {
+    __NCURSES_H::refresh();
+    clear();
+}
+
 void Graphics::wait() const {
     getch();
 }
@@ -83,4 +95,3 @@ void Graphics::wait() const {
 void Graphics::clear() const {
     erase();
 }
-

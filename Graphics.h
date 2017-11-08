@@ -2,6 +2,7 @@
 #define INC_3DTERMINAL_GRAPHICS_H
 
 #include <vector>
+#include <string>
 #include "Vec3.h"
 
 class Graphics {
@@ -21,16 +22,18 @@ public :
     void drawLine(Vec3f start, Vec3f end, float shade);
 
     /* Draws polygon between given coordinates. */
-    void drawPolygon(std::vector<int> xpts, std::vector<int> ypts, float shade, bool fill);
+    void drawPolygon(std::vector<int>& xpts, std::vector<int>& ypts, float& shade, bool& fill);
+
+    void drawString(std::string msg, int x, int y);
 
     int getScreenWidth() { return screenWidth; };
     int getScreenHeight() { return screenHeight; };
 
-    /* ncurses only seems to do it's thing when a getch() is called, */
-    /* these methods are used to kick start drawing to the terminal. */
+    /* methods for controlling ncurses drawing mechanism,
+     * MUST call refresh to flush chars to screen */
     void wait() const;
-    void proceed() const;
     void clear() const;
+    void refresh() const;
 
 private :
 

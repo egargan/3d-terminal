@@ -5,34 +5,40 @@ class objImporter : public ModelImporter {
 
 public:
 
-    objImporter() : ModelImporter() {
-
+    explicit objImporter(const std::string path) {
+        import(path);
     }
 
-    explicit objImporter(const std::string& filepath) {
 
+protected:
 
+    virtual int import(const std::string path) {
 
-    }
+        bool runloop = false;
 
-    int import(const std::string& path) {
+        std::ifstream obj(realpath(path.c_str(), nullptr));
+        std::vector<Vec3f> objvertices;
 
-        std::ifstream objFile(path.c_str());
+        printf("%d\n", obj.is_open());
 
-        if (objFile.bad()) {
-            return -1;
+        if (runloop && obj.is_open() ) {
+
+            while (std::getline(obj, strbuf)) {
+
+                //printf("%s\n", strbuf.c_str());
+
+                // strbuf buffers file line by line
+                // read v's and f's
+
+                strbuf.erase();
+            }
+
         }
-
-        if (access )
-
-        Vec3f vertices;
-
-        printf("test");
-
 
         // Read file into vertices
         // Need to support storage of polygons instead of just lines...
 
+        return 1;
     }
 
 };

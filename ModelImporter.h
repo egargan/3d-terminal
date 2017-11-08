@@ -9,24 +9,22 @@
 #include <unistd.h>
 
 #include <string>
+#include <vector>
 
 class ModelImporter {
-
-    int import(const std::string&);
 
 protected:
 
     Model model;
+    virtual int import(const std::string) = 0;
 
 public:
 
-    ModelImporter();
-    ModelImporter(const std::string);
+    ModelImporter() = default;
 
-    int importFromPath(const std::string);
-
-    Model getModel() const;
-
+    Model getModel() const {
+        return model;
+    }
 };
 
 

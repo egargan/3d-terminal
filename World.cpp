@@ -1,7 +1,6 @@
 
 #include "World.h"
 
-#include <cstdio>
 #include <iostream>
 
 World::World(Graphics context) : gfx{context}, wsTransformer(context) {};
@@ -15,8 +14,6 @@ void World::addObject(Model& object) {
 }
 
 void World::renderObjects() {
-
-    gfx.clear();
 
     for (Model* object : objects) {
 
@@ -43,9 +40,8 @@ void World::renderObjects() {
             //std::cout << "(" << s.x << ", " << s.y << ") -> (" << e.x << ", " << e.y << ")\n";
 
             gfx.drawLine(lines.vertices[*i], lines.vertices[*std::next(i)],
-                         0.8); // Shade of line (0 = darkest)
+                         0); // Shade of line (0 = darkest)
         }
 
     }
-    gfx.wait();
 }
