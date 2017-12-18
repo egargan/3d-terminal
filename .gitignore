@@ -1,6 +1,7 @@
 # User-specific stuff:
 .idea/**/workspace.xml
 .idea/**/tasks.xml
+.idea/codeStyles
 .idea/dictionaries
 log.txt
 

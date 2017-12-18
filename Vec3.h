@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include <cassert>
+#include <string>
 
 template <typename T>
 struct Vec3 {
@@ -74,6 +75,13 @@ struct Vec3 {
     }
 
     T magnitude() { return sqrt(x^2 + y^2 + z^2); }
+
+    std::string tostring() {
+
+        std::string str;
+        //str.append(x + ", " + y + ", " + z);
+        return std::move(str);
+    }
 
 };
 

@@ -16,7 +16,7 @@ class ModelImporter {
 protected:
 
     Model model;
-    virtual int import(const std::string) = 0;
+    virtual int import(std::string) = 0;
 
 public:
 

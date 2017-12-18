@@ -6,7 +6,7 @@ include_directories(${CURSES_INCLUDE_DIR})
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp Model.h Model.cpp Graphics.cpp Graphics.h World.cpp World.h Vec3.h Mat3.h WorldScreenTransformer.h IndexedList.h Models/Cube.cpp Models/Pyramid.cpp Models/all.h ModelImporter.h objImporter.cpp)
+set(SOURCE_FILES main.cpp Model.h Graphics.cpp Graphics.h World.cpp World.h Vec3.h Mat3.h WorldScreenTransformer.h IndexedList.h Models/Cube.cpp Models/Pyramid.cpp Models/all.h ModelImporter.h objImporter.cpp)
 add_executable(3dTerminal ${SOURCE_FILES})
 
 target_link_libraries(3dTerminal ${CURSES_LIBRARIES})

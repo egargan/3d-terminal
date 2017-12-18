@@ -35,12 +35,8 @@ void World::renderObjects() {
         for (auto i = lines.indices.cbegin(), end = lines.indices.cend();
                 i != end; std::advance(i, 2)) {
 
-            //auto s = lines.vertices[*i];
-            //auto e = lines.vertices[*std::next(i)];
-            //std::cout << "(" << s.x << ", " << s.y << ") -> (" << e.x << ", " << e.y << ")\n";
-
             gfx.drawLine(lines.vertices[*i], lines.vertices[*std::next(i)],
-                         0); // Shade of line (0 = darkest)
+                         0.3); // Shade of line (0 = darkest)
         }
 
     }
