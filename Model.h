@@ -33,11 +33,15 @@ public:
         return {vertices, edges};
     };
 
+    // Returns list of vertices, and 3-tuples of vertex indices representing model made up of triangles
+    virtual IndexedList getFaces() const {
+            return {vertices, faces};
+    };
 
-
-    // Faces of model will be tuples of vertices, thf. will probs need to rework how vertices are stored
-    // For now we just want to render the wireframes
     std::vector<Vec3f> vertices;
+
+    // List of integers parsed as 3-tuples representing model made up of triangles
+    std::vector<int> faces;
 
     Vec3f location;
 

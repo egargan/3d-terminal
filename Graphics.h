@@ -7,6 +7,8 @@
 
 class Graphics {
 
+
+
 public :
 
     Graphics();
@@ -31,7 +33,6 @@ public :
 
     /* methods for controlling ncurses drawing mechanism,
      * MUST call refresh to flush chars to screen */
-    void wait() const;
     void clear() const;
     void refresh() const;
 

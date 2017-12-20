@@ -8,23 +8,26 @@
 
 int main() {
 
-//    Graphics gfx;
-//    World world(gfx);
+    Graphics gfx;
+    World world(gfx);
 
-//    Pyramid pyramid(1.5f, 1.0f);
-//    Cube cube(1.0f);
-//    //world.addObject(pyramid);
-//    world.addObject(cube);
+    //Pyramid pyramid(1.5f, 1.0f);
+    Cube cube(1.0f);
+    //world.addObject(pyramid);
+    //world.addObject(cube);
 
     objImporter impo("../wt_teapot.obj");
-//
-//    while(true) {
-//        world.renderObjects();
-//        gfx.drawString(std::string("test"), 5, 5);
-//        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-//        gfx.refresh();
-//    }
+    Model tp = impo.getModel();
 
+    world.addObject(tp);
+    //world.addObject(cube);
+
+    while(true) {
+        world.renderObjects();
+        gfx.drawString(std::string("test"), 5, 5);
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        gfx.refresh();
+    }
 
     return 0;
 }

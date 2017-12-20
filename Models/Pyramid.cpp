@@ -16,7 +16,16 @@ public:
         vertices.push_back({-halfBase, -massCentre, -halfBase});
     }
 
-    IndexedList getLines() const {
+    IndexedList getLines() const override {
+        return {
+                vertices, {
+                        0,1,  0,2,  0,3,  0,4,
+                        1,2,  1,3,  2,4,  3,4
+                }
+        };
+    }
+
+    IndexedList getFaces() const override {
         return {
                 vertices, {
                         0,1,  0,2,  0,3,  0,4,

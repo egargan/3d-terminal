@@ -6,7 +6,10 @@ class Cube : public Model {
 public:
 
     explicit Cube(float size) : Model() {
+
         size /= 2.0;
+
+        // Define model vertices
         vertices.push_back({-size, -size, -size});
         vertices.push_back({-size, -size, size});
         vertices.push_back({-size, size, -size});
@@ -16,10 +19,21 @@ public:
         vertices.push_back({size, -size, size});
         vertices.push_back({size, size, -size});
         vertices.push_back({size, size, size});
+
+        // Define cube shape (using triangles)
+        faces = {
+                 0,1,3,  0,2,3,
+                 1,5,7,  1,3,7,
+                 5,4,6,  5,7,6,
+                 4,0,2,  4,6,2,
+                 4,5,0,  1,5,0,
+                 3,2,6,  3,7,6
+        };
+
     }
 
-    // 'override' ensures method is doing so, from a base virtual function
-    IndexedList getLines() const override {
+    // Gets IndexedList holding vertices and list of 2-tuples of vertex indices denoting edges
+    IndexedList getLines() const override { // 'override' ensures method is doing so, from a base virtual function
         return {
                 vertices, {
                         // 2-tuples of vertices representing edges

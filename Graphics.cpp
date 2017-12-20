@@ -35,12 +35,13 @@ void Graphics::drawPixel(int x, int y, float shade) {
 
     assert(x <= screenWidth || x > 0);
     assert(y <= screenHeight || y > 0);
-    mvaddch(y, x, getCharFromShade(shade));
+    //mvaddch(y, x, getCharFromShade(shade));
+    mvaddch(y,x, '*');
     //refresh();
 
 }
 
-void Graphics::drawLine(Vec3f start, Vec3f end, float shade) {
+void Graphics::drawLine(const Vec3f start, const Vec3f end, const float shade) {
     drawLine((int)start.x, (int)start.y, (int)end.x, (int)end.y, shade);
 }
 
@@ -77,6 +78,7 @@ void Graphics::drawLine(int startx, int starty, const int endx, const int endy, 
     drawPixel(endx, endy, shade);
 }
 
+
 void Graphics::drawString(std::string msg, const int x, const int y) {
     move(y, x);
     printw(msg.c_str());
@@ -86,10 +88,6 @@ void Graphics::drawString(std::string msg, const int x, const int y) {
 void Graphics::refresh() const {
     __NCURSES_H::refresh();
     clear();
-}
-
-void Graphics::wait() const {
-    getch();
 }
 
 void Graphics::clear() const {
