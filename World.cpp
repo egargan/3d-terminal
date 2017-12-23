@@ -18,7 +18,7 @@ void World::renderObjects() {
     for (Model* object : objects) {
 
         // Make transformations
-        Mat3f spin = Mat3f::RotationY(0.05f);
+        Mat3f spin = Mat3f::RotationY(0.04f);
         Mat3f tilt = Mat3f::RotationX(0.3f);
 
         // Apply *permanent* transformation to model
@@ -26,12 +26,12 @@ void World::renderObjects() {
             v *= spin;
         }
 
-        // Get vertex values + apply *temporary*, value transformations
+        // Get vertex values + apply *temporary*/value transformations
         auto lines = object->getFaces();
 
         for (auto& v : lines.vertices) {
             v *= tilt;
-            v += {0.0f, -0.6f, 1.8f}; // Push object further into Z / away from viewport
+            v += {0.0f, -0.4f, 1.7f}; // Push object further into Z / away from viewport
             wsTransformer.TransformVec(v);
         }
 
@@ -49,6 +49,7 @@ void World::renderObjects() {
             gfx.drawLine(lines.vertices[*i], lines.vertices[*(i+1)], 0.7);
             gfx.drawLine(lines.vertices[*(i+1)], lines.vertices[*(i+2)], 0.7);
             gfx.drawLine(lines.vertices[*(i+2)], lines.vertices[*i], 0.7);
+
         }
 
     }

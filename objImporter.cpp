@@ -2,8 +2,6 @@
 #include <iostream>
 #include "ModelImporter.h"
 
-#include <ctime>
-
 class objImporter : public ModelImporter {
 
     // Enum for distinguishing data in obj file
@@ -16,7 +14,7 @@ class objImporter : public ModelImporter {
         unrecognised,
     };
 
-    // Outputs one of above enums based on
+    // Outputs one of above enums based on .obj's data indicators;
     objData mapObjElement(const std::string& el) const {
 
         if (el == "v") return objData::v;
@@ -28,16 +26,17 @@ class objImporter : public ModelImporter {
 
 public:
 
-    explicit objImporter(const std::string path) {
+    explicit objImporter(const std::string& path) {
         import(path);
     }
 
 
 protected:
 
-    virtual int import(const std::string path) {
+    virtual int import(const std::string path) override {
 
         std::ifstream obj(realpath(path.c_str(), nullptr));
+
         assert(obj.is_open());
 
         std::vector<Vec3f> obj_vertices;
@@ -47,30 +46,18 @@ protected:
         std::string strbuf;
         std::vector<std::string> itembuf;
 
-        int linenum = 0;
-
-        std::clock_t start;
-        double duration;
-        start = std::clock();
-
         while (std::getline(obj, strbuf)) {
-
-            linenum++;
 
             itembuf = splitstr(strbuf, ' ');
 
+            // Switch on first string in line, indicating what data follows, e.g. 'v', 'f'
+            // Can't switch on strings so have to use enum
             switch (mapObjElement(itembuf.front())) {
 
                 // For now we're only concerned with vertices and faces
-                // Other items, e.g. vertex normals 'vn' might be relevant at some point,
-                // but we ignore them for now.
 
                 // Quite bulky use of string vectors for parsing each line of obj file,
                 // replace each 'case' below with bespoke iterator splitting if speed becomes issue.
-
-                case objData::hash : { // .obj comment symbol
-                    continue;
-                }
 
                 case objData::v : { // vertex
 
@@ -80,10 +67,6 @@ protected:
                             (float) strtod(itembuf[2].c_str(), nullptr),
                             (float) strtod(itembuf[3].c_str(), nullptr)
                     });
-
-//                    printf("%f, %f, %f\n",(float) strtod(itembuf[1].c_str(), nullptr),
-//                           (float) strtod(itembuf[2].c_str(), nullptr),
-//                                   (float) strtod(itembuf[3].c_str(), nullptr));
 
                     break;
                 }
@@ -114,10 +97,6 @@ protected:
         model.vertices = obj_vertices;
         model.faces = obj_findices;
 
-        duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
-
-        //std::cout << duration << "\n";
-
         return 1;
     }
 
@@ -127,7 +106,7 @@ protected:
         std::vector<std::string> words;
 
         auto fiter = str.cbegin(); // cbegin gets const pointer
-        decltype(fiter) fbegin; // 'declytype(exp)' gets the type of 'exp', while auto uses type deduction
+        decltype(fiter) fbegin; // 'declytype(exp)' gets the type of 'exp', while 'auto' uses type deduction
 
         while (*fiter != '\0') {
 

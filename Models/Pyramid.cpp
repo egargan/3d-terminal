@@ -3,8 +3,10 @@
 class Pyramid : public Model {
 
 public:
-    // 'Origin' of pyramid at height / 3
+
     Pyramid(const float height, const float baseSize) {
+
+        // 'Origin' of pyramid at height / 3
 
         const float halfBase = baseSize / 2.0f;
         const float massCentre = height / 3.0f;
@@ -28,8 +30,12 @@ public:
     IndexedList getFaces() const override {
         return {
                 vertices, {
-                        0,1,  0,2,  0,3,  0,4,
-                        1,2,  1,3,  2,4,  3,4
+                        0,1,2,
+                        0,2,4,
+                        0,3,4,
+                        0,3,1,
+                        1,2,3,
+                        2,4,3
                 }
         };
     }

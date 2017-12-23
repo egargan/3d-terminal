@@ -18,7 +18,7 @@ struct Mat3 {
         return *this;
     }
 
-    // Self by matrix mult. (dot product)
+    // Self by matrix mult.
     Mat3& operator*=(Mat3<T> const& rhs) {
 
         Mat3<T> product = Mat3<T>();
