@@ -46,6 +46,9 @@ protected:
         std::string strbuf;
         std::vector<std::string> itembuf;
 
+        // Insert dummy vertex as .obj vertex indices are 1-based, and World::renderObjects() iterates from 0
+        obj_vertices.push_back(Vec3f{0,0,0});
+
         while (std::getline(obj, strbuf)) {
 
             itembuf = splitstr(strbuf, ' ');
@@ -67,7 +70,6 @@ protected:
                             (float) strtod(itembuf[2].c_str(), nullptr),
                             (float) strtod(itembuf[3].c_str(), nullptr)
                     });
-
                     break;
                 }
 
@@ -78,12 +80,11 @@ protected:
                     for (int i = 1; i <= 3; i++) {
 
                         // isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
-                        auto vindex = itembuf[1].substr(0, itembuf[1].find_first_of('/'));
+                        auto vindex = itembuf[i].substr(0, itembuf[i].find_first_of('/'));
 
                         // just dump into list of ints to be parsed as 3-tuples
-                        obj_findices.emplace_back(std::stoi(vindex));
+                        obj_findices.push_back(std::stoi(vindex));
                     }
-
                     break;
                 }
 

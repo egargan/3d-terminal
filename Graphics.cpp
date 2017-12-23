@@ -80,7 +80,7 @@ void Graphics::drawLine(int startx, int starty, const int endx, const int endy, 
 }
 
 
-void Graphics::drawString(std::string& msg, const int x, const int y) const {
+void Graphics::drawString(const std::string msg, const int x, const int y) const {
     move(y, x);
     printw(msg.c_str());
 }

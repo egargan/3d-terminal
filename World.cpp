@@ -27,28 +27,25 @@ void World::renderObjects() {
         }
 
         // Get vertex values + apply *temporary*/value transformations
-        auto lines = object->getFaces();
+        auto faces = object->getFaces();
 
-        for (auto& v : lines.vertices) {
+        for (auto& v : faces.vertices) {
             v *= tilt;
             v += {0.0f, -0.4f, 1.7f}; // Push object further into Z / away from viewport
             wsTransformer.TransformVec(v);
         }
 
-        // Draws model edge-by-edge
-//        for (auto i = lines.indices.cbegin(), end = lines.indices.cend();
-//                i != end; std::advance(i, 2)) {
-//
-//            gfx.drawLine(lines.vertices[*i], lines.vertices[*std::next(i)],
-//                         0.3); // Shade of line (0 = darkest)
-
         // Draws model by its list of triangles
-        for (auto i = lines.indices.cbegin(), end = lines.indices.cend();
-            i != end; std::advance(i, 3)) {
+        for (auto i = faces.indices.cbegin(); i != faces.indices.cend(); std::advance(i, 3)) {
 
-            gfx.drawLine(lines.vertices[*i], lines.vertices[*(i+1)], 0.7);
-            gfx.drawLine(lines.vertices[*(i+1)], lines.vertices[*(i+2)], 0.7);
-            gfx.drawLine(lines.vertices[*(i+2)], lines.vertices[*i], 0.7);
+            gfx.drawPixel(faces.vertices[*i].x, faces.vertices[*i].y, 0.7);
+            gfx.drawPixel(faces.vertices[*(i+1)].x, faces.vertices[*(i+1)].y, 0.7);
+            gfx.drawPixel(faces.vertices[*(i+2)].x, faces.vertices[*(i+2)].y, 0.7);
+
+            // Uncomment to draw lines between vertices
+//            gfx.drawLine(faces.vertices[*i], faces.vertices[*std::next(i, 1)], 0.7);
+//            gfx.drawLine(faces.vertices[*std::next(i, 1)], faces.vertices[*std::next(i, 2)], 0.7);
+//            gfx.drawLine(faces.vertices[*std::next(i, 2)], faces.vertices[*i], 0.7);
 
         }
 

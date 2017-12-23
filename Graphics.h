@@ -20,7 +20,7 @@ public :
     /* Draws line between two 3d vectors. */
     void drawLine(Vec3f start, Vec3f end, float shade) const;
 
-    void drawString(std::string& msg, int x, int y) const;
+    void drawString(std::string msg, int x, int y) const;
 
     int getScreenWidth() { return screenWidth; };
     int getScreenHeight() { return screenHeight; };
