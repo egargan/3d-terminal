@@ -31,7 +31,7 @@ void World::renderObjects() {
 
         for (auto& v : faces.vertices) {
             v *= tilt;
-            v += {0.0f, -0.4f, 1.7f}; // Push object further into Z / away from viewport
+            v += {0.0f, -0.4f, 1.6f}; // Push object further into Z / away from viewport
             wsTransformer.TransformVec(v);
         }
 

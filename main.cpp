@@ -14,7 +14,7 @@ int main() {
     Pyramid pyramid(1.5f, 1.0f);
     Cube cube(1.0f);
 //
-    objImporter impo("../wt_teapot.obj");
+    objImporter impo("../Models/wt_teapot.obj");
     Model tp = impo.getModel();
 
     world.addObject(tp);
