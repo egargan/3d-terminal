@@ -1,22 +1,28 @@
 #include <iostream>
+#include <chrono>
 
-class timer {
+/**
+ * Utility timer class.
+ *
+ * Timing begins on instantiation, and ends with end().
+ * end() returns time elapsed in microseconds.
+ */
 
-    std::clock_t start_time;
+using mclock = std::chrono::high_resolution_clock;
 
-public:
+struct timer {
+
+    mclock::time_point begin;
 
     timer() {
 
-        double duration;
-
-        start_time = std::clock();
-
+        begin = mclock::now();
     }
 
+    /** Ends timer and return micros elapsed since timer instantiated. */
     double end() const {
 
-        return ( std::clock() - start_time ) / (double) CLOCKS_PER_SEC;
-
+        return std::chrono::duration_cast<std::chrono::microseconds>(mclock::now() - begin).count();
     }
+
 };

@@ -5,12 +5,14 @@
 #include <vector>
 #include "Vec3.h"
 
-// Convenience structure for holding vertices, and indices referring to them
+/**
+ * Convenience structure for holding vertices, and indices referring to them.
+ * */
 struct IndexedList {
 
     std::vector<Vec3f> vertices;
 
-    // List of integers, parsed as list of tuples for representing edges or polygons
+    // List of integers, parsed as list of n-tuples for representing e.g. edges or polygons
     std::vector<int> indices;
 
 };

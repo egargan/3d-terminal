@@ -8,18 +8,30 @@
 
 #include <vector>
 
+/**
+ * Model class header.
+ *
+ * Contains member vectors storing model's vertices and face polygons.
+ * Faces are represented as tuples of indices referring to vertex list.
+ */
 class Model {
 
 public:
 
+    /** Constructs model with given vertices. */
     explicit Model(std::vector<Vec3f> points) : vertices{std::move(points)}, location{0,0,0} {};
 
+    /** Constructs empty model. */
     Model() : location{0,0,0} {};
 
+    /** Clears model vertex list. */
     ~Model() { vertices.clear(); };
 
 
-    // Unless overridden, an edge will be drawn between every vertex.
+    /** Returns list of edges defining model's shape.
+     * Unless overriden, will return a list of edges connecting every single vertex - override me!
+     *
+     * @return IndexedList object containing model vertices, and list of int 2-tuples representing model edges. */
     virtual IndexedList getLines() const {
 
         std::vector<int> edges;
@@ -33,16 +45,18 @@ public:
         return {vertices, edges};
     };
 
-    // Returns list of vertices, and 3-tuples of vertex indices representing model made up of triangles
+    /** Returns list of vertices, and 3-tuples of vertex indices representing model made up of triangles. */
     virtual IndexedList getFaces() const {
-            return {vertices, faces};
+        return {vertices, faces};
     };
 
     std::vector<Vec3f> vertices;
 
-    // List of integers parsed as 3-tuples representing model made up of triangles
+    // Stored as actual member, as opposed to model lines, as the model importer needs a target for its output.
+    /** List of integers parsed as 3-tuples representing model made up of triangles. */
     std::vector<int> faces;
 
+    /** 3D coordinate representing model's location in the 'world'. */
     Vec3f location;
 
 };

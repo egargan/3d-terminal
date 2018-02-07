@@ -32,7 +32,7 @@ public:
 
     }
 
-    // Gets IndexedList holding vertices and list of 2-tuples of vertex indices denoting edges
+    /** Gets IndexedList holding vertices and list of 2-tuples of vertex indices denoting edges. */
     IndexedList getLines() const override { // 'override' ensures method is doing so, from a base virtual function
         return {
                 vertices, {

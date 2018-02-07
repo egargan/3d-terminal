@@ -6,22 +6,31 @@
 
 #include <thread>
 
+/**
+ * Main program procedure.
+ *
+ * Declares any models, adds them to a 'world' object, and performs render loop.
+ */
 int main() {
 
+    // Declare new graphics context and 'world' object
     Graphics gfx;
     World world(gfx);
 
-    Pyramid pyramid(1.5f, 1.0f);
-    Cube cube(1.0f);
-//
+    // Declare some models to be added to world.
+    //Pyramid pyramid(1.5f, 1.0f);
+    //Cube cube(1.0f);
+
+    // Create model from .obj file
     objImporter impo("../Models/wt_teapot.obj");
     Model tp = impo.getModel();
 
+    // Add defined objects to world
     world.addObject(tp);
-    //world.addObject(cube);
-    //world.addObject(pyramid);
 
+    // Render loop - been meaning to move to own class where it would make more sense.
     while(true) {
+
         world.renderObjects();
         std::this_thread::sleep_for(std::chrono::milliseconds(40));
         gfx.refresh();

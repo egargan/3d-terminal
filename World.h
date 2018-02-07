@@ -8,7 +8,11 @@
 #include "Graphics.h"
 #include "WorldScreenTransformer.h"
 
-// Class representing the space in which models / objects exist
+/**
+ * Header of 'World' class.
+ *
+ * Represents the space in which models / objects exist.
+ */
 class World {
 
 public:
@@ -25,6 +29,7 @@ private:
     Graphics gfx;
     std::vector<Model*> objects;
 
+    /** Object that handles projection of 3D objects to 2D space. */
     WorldScreenTransformer wsTransformer;
 
 };

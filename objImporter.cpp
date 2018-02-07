@@ -2,9 +2,18 @@
 #include <iostream>
 #include "ModelImporter.h"
 
+/**
+ * Model importer for .OBJ files.
+ *
+ * .OBJ files are perhaps the simplest object description file, holding a list of vertices, as well as lists of indices
+ * that reference those vertices to describe faces.
+ *
+ * It of course stores other data e.g. vertex normals, texture data,
+ * etc., but this is currently irrelevant to this project as we're only looking to render wireframes.
+ */
 class objImporter : public ModelImporter {
 
-    // Enum for distinguishing data in obj file
+    /** Enum for distinguishing data in obj file. */
     // Is not exhaustive! Only includes elements relevant to current modeller
     enum objData {
         hash,       // comment
@@ -14,18 +23,22 @@ class objImporter : public ModelImporter {
         unrecognised,
     };
 
-    // Outputs one of above enums based on .obj's data indicators;
+    /** Returns locally-defined enum based on .obj's data indicators, e.g. 'v', 'f' etc.
+     *
+     * @param el Data indicator string. */
     objData mapObjElement(const std::string& el) const {
 
         if (el == "v") return objData::v;
         if (el == "vn") return objData::vn;
         if (el == "f") return objData::f;
         if (el == "#") return objData::hash;
+
         return unrecognised;
     }
 
 public:
 
+    /** Constructor accepting path to .obj file, relative to project base directory. */
     explicit objImporter(const std::string& path) {
         import(path);
     }
@@ -33,6 +46,9 @@ public:
 
 protected:
 
+    /** Performs import operation on .obj file at given path.
+     *
+     * Iterates through the .obj file and populates a series of vectors holding vertices and faces. */
     virtual int import(const std::string path) override {
 
         std::ifstream obj(realpath(path.c_str(), nullptr));
@@ -75,14 +91,14 @@ protected:
 
                 case objData::f : { // face
 
-                    // get single face indices from string, will be in form 'v/vt/vn':
+                    // Get single face indices from string, will be in form 'v/vt/vn':
                     // vertex/vertex texture coordinate index/vertex normal index
                     for (int i = 1; i <= 3; i++) {
 
-                        // isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
+                        // Isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
                         auto vindex = itembuf[i].substr(0, itembuf[i].find_first_of('/'));
 
-                        // just dump into list of ints to be parsed as 3-tuples
+                        // Just dump into list of ints to be parsed as 3-tuples
                         obj_findices.push_back(std::stoi(vindex));
                     }
                     break;
@@ -91,6 +107,7 @@ protected:
                 default : continue;
             }
 
+            // Clear per-line buffers
             strbuf.clear();
             itembuf.clear();
         }
@@ -101,13 +118,13 @@ protected:
         return 1;
     }
 
-    // Splits string 'str' about split char 'delimit', returns list of strings delimited by 'delimit'
+    /** Splits string 'str' about split char 'delimit', returns list of strings delimited by 'delimit'. */
     std::vector<std::string> splitstr(const std::string& str, const char& delimit) const {
 
         std::vector<std::string> words;
 
         auto fiter = str.cbegin(); // cbegin gets const pointer
-        decltype(fiter) fbegin; // 'declytype(exp)' gets the type of 'exp', while 'auto' uses type deduction
+        decltype(fiter) fbegin; // 'decltype(exp)' gets the type of 'exp', while 'auto' uses type deduction
 
         while (*fiter != '\0') {
 
