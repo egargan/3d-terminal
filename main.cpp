@@ -22,7 +22,7 @@ int main() {
     //Cube cube(1.0f);
 
     // Create model from .obj file
-    objImporter impo("../Models/wt_teapot.obj");
+    objImporter impo("../Models/aa.obj");
     Model tp = impo.getModel();
 
     // Add defined objects to world

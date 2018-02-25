@@ -1,5 +1,6 @@
 
 #include <iostream>
+
 #include "ModelImporter.h"
 
 /**
@@ -8,7 +9,7 @@
  * .OBJ files are perhaps the simplest object description file, holding a list of vertices, as well as lists of indices
  * that reference those vertices to describe faces.
  *
- * It of course stores other data e.g. vertex normals, texture data,
+ * .OBJ stores other data e.g. vertex normals, texture data,
  * etc., but this is currently irrelevant to this project as we're only looking to render wireframes.
  */
 class objImporter : public ModelImporter {
@@ -96,10 +97,12 @@ protected:
                     for (int i = 1; i <= 3; i++) {
 
                         // Isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
-                        auto vindex = itembuf[i].substr(0, itembuf[i].find_first_of('/'));
+                        std::string vindex = itembuf[i].substr(0, itembuf[i].find_first_of('/'));
+
 
                         // Just dump into list of ints to be parsed as 3-tuples
                         obj_findices.push_back(std::stoi(vindex));
+
                     }
                     break;
                 }
@@ -126,17 +129,21 @@ protected:
         auto fiter = str.cbegin(); // cbegin gets const pointer
         decltype(fiter) fbegin; // 'decltype(exp)' gets the type of 'exp', while 'auto' uses type deduction
 
-        while (*fiter != '\0') {
+        while (fiter != str.cend()) {
 
             fbegin = fiter;
 
-            while (*fiter != delimit && *std::next(fiter) != '\0') {
+            while (*fiter != delimit && fiter != str.cend()) {
                 std::advance(fiter, 1);
             }
 
             words.emplace_back(std::string(fbegin, fiter));
-            std::advance(fiter, 1);
+
+            // TODO: checking fiter != end 3 times? analyse flow
+
+            if (fiter != str.cend()) std::advance(fiter, 1);
         }
+
 
         return words;
     }
