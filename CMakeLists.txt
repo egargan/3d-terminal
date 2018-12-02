@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.6)
-project(3dTerminal)
-
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
+project(3dterm)
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(SOURCE_FILES main.cpp Model.h Graphics.cpp Graphics.h World.cpp World.h Vec3.h Mat3.h WorldScreenTransformer.h IndexedList.h Models/Cube.cpp Models/Pyramid.cpp Models/all.h ModelImporter.h objImporter.cpp timer.cpp)
+add_subdirectory(src)
 
-add_executable(3dTerminal ${SOURCE_FILES})
+enable_testing()
+add_subdirectory(test)
 
-target_link_libraries(3dTerminal ${CURSES_LIBRARIES})
+# https://github.com/bast/gtest-demo
