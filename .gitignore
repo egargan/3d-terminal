@@ -7,5 +7,5 @@ cmake-build-debug/
 # File-based project format:
 *.iws
 
-# googletest directory
-test/googletest/
+# DS_Store
+.DS_Store
