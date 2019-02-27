@@ -9,3 +9,6 @@ cmake-build-debug/
 
 # DS_Store
 .DS_Store
+
+# Downloaded model assets
+data/*.obj
