@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <fstream>
 
 #include "ModelImporter.h"
 
@@ -32,7 +33,6 @@ class objImporter : public ModelImporter {
         if (el == "v") return objData::v;
         if (el == "vn") return objData::vn;
         if (el == "f") return objData::f;
-        if (el == "#") return objData::hash;
 
         return unrecognised;
     }
@@ -52,7 +52,7 @@ protected:
      * Iterates through the .obj file and populates a series of vectors holding vertices and faces. */
     virtual int import(const std::string path) override {
 
-        std::ifstream obj(realpath(path.c_str(), NULL));
+        std::ifstream obj(realpath(path.c_str(), NULL), std::ifstream::in);
 
         assert(obj.is_open());
 
@@ -67,6 +67,9 @@ protected:
         obj_vertices.push_back(Vec3f{0,0,0});
 
         while (std::getline(obj, strbuf)) {
+
+            // Break early if comment line
+            if (strbuf.front() == '#') continue;
 
             itembuf = splitstr(strbuf, ' ');
 
@@ -83,24 +86,28 @@ protected:
 
                     // Parse next three items in itembuf - expected to be float values x, y, z
                     obj_vertices.emplace_back(Vec3f{
-                            (float) strtod(itembuf[1].c_str(), nullptr),
-                            (float) strtod(itembuf[2].c_str(), nullptr),
-                            (float) strtod(itembuf[3].c_str(), nullptr)
+                            strtof(itembuf[1].c_str(), nullptr),
+                            strtof(itembuf[2].c_str(), nullptr),
+                            strtof(itembuf[3].c_str(), nullptr)
                     });
                     break;
                 }
 
                 case objData::f : { // face
 
-                    // Get single face indices from string, will be in form 'v/vt/vn':
-                    // vertex/vertex texture coordinate index/vertex normal index
-                    for (int i = 1; i <= 3; i++) {
-
+                    // Collect vertex indices making up faces
+                    // Some .objs use > 3 vertex indices in face declarations, for squares, pentagons, etc,
+                    // we break down these shapes into component triangles, e.g.
+                    //
+                    //  2 - 3
+                    //  | / |  -> (1,2,3), (1,3,4)
+                    //  1 - 4
+                    //
+                    for (int i = 2; i < itembuf.size() - 1; i++) {
                         // Isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
-                        std::string vindex = itembuf[i].substr(0, itembuf[i].find_first_of('/'));
-
-                        // Just dump into list of ints to be parsed as 3-tuples
-                        obj_findices.push_back(std::stoi(vindex));
+                        obj_findices.push_back(std::stoi(itembuf[1].substr(0, itembuf[1].find_first_of('/'))));
+                        obj_findices.push_back(std::stoi(itembuf[i].substr(0, itembuf[i].find_first_of('/'))));
+                        obj_findices.push_back(std::stoi(itembuf[i+1].substr(0, itembuf[i+1].find_first_of('/'))));
                     }
                     break;
                 }
@@ -135,6 +142,9 @@ protected:
             while (*fiter == delimit) {
                 std::advance(fiter, 1);
             }
+
+            // True if trailing delimiters
+            if (fiter == fend) break;
 
             // Begin word demarcation
             fbegin = fiter;
