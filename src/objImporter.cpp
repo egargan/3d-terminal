@@ -69,7 +69,7 @@ protected:
         while (std::getline(obj, strbuf)) {
 
             // Break early if comment line
-            if (strbuf.front() == '#') continue;
+            if (strbuf.empty() || strbuf.front() == '#') continue;
 
             itembuf = splitstr(strbuf, ' ');
 
