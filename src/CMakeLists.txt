@@ -7,8 +7,8 @@ include_directories(${CURSES_INCLUDE_DIR})
 find_package(Boost COMPONENTS filesystem program_options)
 include_directories(${Boost_INCLUDE_DIRS})
 
-set(SOURCE_FILES main.cpp Model.h Graphics.cpp Graphics.h World.cpp World.h Vec3.h Mat3.h WorldScreenTransformer.h
-        IndexedList.h Models/Cube.cpp Models/Pyramid.cpp Models/all.h ModelImporter.h objImporter.cpp timer.cpp)
+set(SOURCE_FILES main.cc model.h graphics.cc graphics.h world.cc world.h vec3.h mat3.h world_screen_transformer.h
+        indexed_list.h models/cube.cc models/pyramid.cc models/all.h model_importer.h obj_importer.cc timer.cc)
 
 add_executable(3dterm ${SOURCE_FILES})
 

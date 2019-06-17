@@ -3,7 +3,7 @@ project(${CMAKE_PROJECT_NAME}_test)
 add_subdirectory(googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-add_executable(unitTests main.cpp objImportTest.cpp)
+add_executable(unitTests main.cc obj_import_test.cc)
 
 target_link_libraries(unitTests gtest gtest_main)
 
