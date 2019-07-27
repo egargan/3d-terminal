@@ -35,3 +35,25 @@ TEST(objImport, facesTest4VertexIndices) {
 
   ASSERT_EQ(vindices, compare);
 }
+
+// TODO get more specific with these tests
+
+TEST(ojbImport, nonNumericVertexIndex) {
+  try {
+    ObjImporter importer("../../data/test/non-numeric-v-index.obj");
+  } catch (const ImportException &e) {
+    SUCCEED();
+    return;
+  }
+  FAIL();
+}
+
+TEST(ojbImport, nonNumericVertex) {
+  try {
+    ObjImporter importer("../../data/test/non-numeric-vertex.obj");
+  } catch (const ImportException &e) {
+    SUCCEED();
+    return;
+  }
+  FAIL();
+}

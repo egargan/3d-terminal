@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "model_importer.h"
+#include "import_exception.cc"
 
 // Model importer for .OBJ files
 
@@ -50,6 +51,8 @@ class ObjImporter : public ModelImporter {
 
     assert(obj.is_open());
 
+    long line_num = 1;
+
     std::vector<Vec3f> obj_vertices;
     std::vector<int> obj_findices;
 
@@ -60,62 +63,70 @@ class ObjImporter : public ModelImporter {
     // Insert dummy vertex as .obj vertex indices are 1-based, and World::renderObjects() iterates from 0
     obj_vertices.push_back(Vec3f{0, 0, 0});
 
-    while (std::getline(obj, strbuf)) {
+    try {
+      while (std::getline(obj, strbuf)) {
 
-      // Break early if comment line
-      if (strbuf.empty() || strbuf.front() == '#') continue;
+        // Break early if comment line
+        if (strbuf.empty() || strbuf.front() == '#') continue;
 
-      itembuf = SplitString(strbuf, ' ');
+        itembuf = SplitString(strbuf, ' ');
 
-      // Switch on first string in line, indicating what data follows, e.g. 'v', 'f'
-      // Can't switch on strings so have to use enum
-      switch (MapObjElement(itembuf.front())) {
+        // Switch on first string in line, indicating what data follows, e.g. 'v', 'f'
+        // Can't switch on strings so have to use enum
+        switch (MapObjElement(itembuf.front())) {
 
-        // For now we're only concerned with vertices and faces
+          // For now we're only concerned with vertices and faces
 
-        // Quite bulky use of string vectors for parsing each line of obj file,
-        // replace each 'case' below with bespoke iterator splitting if speed becomes issue.
+          // Quite bulky use of string vectors for parsing each line of obj file,
+          // replace each 'case' below with bespoke iterator splitting if speed becomes issue.
 
-        case ObjData::v : { // vertex
+          case ObjData::v : { // vertex
 
-          // Parse next three items in itembuf - expected to be float values x, y, z
-          obj_vertices.emplace_back(Vec3f{
-              strtof(itembuf[1].c_str(), nullptr),
-              strtof(itembuf[2].c_str(), nullptr),
-              strtof(itembuf[3].c_str(), nullptr)
-          });
-          break;
-        }
-
-        case ObjData::f : { // face
-
-          // Collect vertex indices making up faces
-          // Some .objs use > 3 vertex indices in face declarations, for squares, pentagons, etc,
-          // we break down these shapes into component triangles, e.g.
-          //
-          //  2 - 3
-          //  | / |  -> (1,2,3), (1,3,4)
-          //  1 - 4
-          //
-          for (int i = 2; i < itembuf.size() - 1; i++) {
-            // Isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
-            obj_findices.push_back(std::stoi(itembuf[1].substr(0, itembuf[1].find_first_of('/'))));
-            obj_findices.push_back(std::stoi(itembuf[i].substr(0, itembuf[i].find_first_of('/'))));
-            obj_findices.push_back(std::stoi(itembuf[i + 1].substr(0, itembuf[i + 1].find_first_of('/'))));
+            // Parse next three items in itembuf - expected to be float values x, y, z
+            obj_vertices.emplace_back(Vec3f{
+                std::stof(itembuf[1].c_str(), nullptr),
+                std::stof(itembuf[2].c_str(), nullptr),
+                std::stof(itembuf[3].c_str(), nullptr)
+            });
+            break;
           }
-          break;
+
+            // TODO range check vertex indices against current
+
+          case ObjData::f : { // face
+
+            // Collect vertex indices making up faces
+            // Some .objs use > 3 vertex indices in face declarations, for squares, pentagons, etc,
+            // we break down these shapes into component triangles, e.g.
+            //
+            //  2 - 3
+            //  | / |  -> (1,2,3), (1,3,4)
+            //  1 - 4
+            //
+            for (int i = 2; i < itembuf.size() - 1; i++) {
+              // Isolate v in 'v/vt/vn': adjust if supporting vn and/or vt
+              obj_findices.push_back(std::stoi(itembuf[1].substr(0, itembuf[1].find_first_of('/'))));
+              obj_findices.push_back(std::stoi(itembuf[i].substr(0, itembuf[i].find_first_of('/'))));
+              obj_findices.push_back(std::stoi(itembuf[i + 1].substr(0, itembuf[i + 1].find_first_of('/'))));
+            }
+            break;
+          }
+
+          default : continue;
         }
 
-        default : continue;
-      }
+        line_num++;
 
-      // Clear per-line buffers
-      strbuf.clear();
-      itembuf.clear();
+        // Clear per-line buffers
+        strbuf.clear();
+        itembuf.clear();
+      }
+    } catch (const std::exception &e) {
+      throw ImportException(path, line_num, e);
     }
 
-    model_.vertices_ = obj_vertices;
-    model_.faces_ = obj_findices;
+    model_.vertices_ = std::move(obj_vertices);
+    model_.faces_ = std::move(obj_findices);
 
     return 1;
   }
